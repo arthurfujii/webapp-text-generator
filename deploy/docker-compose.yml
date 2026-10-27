@@ -1,0 +1,89 @@
+name: tapitise
+
+# Tapitise webapp (webapp-text-generator) — stack da VPS Contabo (srv01).
+# Frontend Next.js do app Dify "Tapitise" (API em https://dify.arthurfujii.com.br/v1).
+# As chamadas a API do Dify sao server-side (rotas /api/* -> dify-client),
+# entao nao ha CORS cross-origin no browser.
+#
+# Padrao da casa (SETUP.md caps. 33/34/35/36/38):
+#   - SEM portas publicadas: exposicao so via Traefik + Cloudflare
+#   - imagem local pinada (tapitise-webapp:local) e base pinada por digest
+#   - security-headers@file; homepage.* (autodescoberta, cap. 49)
+#   - limites de recurso (cap. 35) + logging json 10m x 3 (cap. 34)
+#   - app stateless: sem bind mounts
+#
+# Layout na VPS:
+#   /srv/apps/tapitise/docker-compose.yml   este arquivo
+#   /srv/apps/tapitise/.env                 secrets (600, fora do Git)
+#   /srv/apps/tapitise/src                  fonte do repositorio (build context)
+#
+# Deploy manual a partir da estacao (pela VPN):
+#   rsync -a --delete --exclude '.git' --exclude 'node_modules' --exclude '.next' \
+#     --exclude '.env*' --exclude 'AUTH_CREDENTIALS.local.txt' \
+#     ~/Projetos/tapitise/webapp-text-generator/ ops@10.10.10.1:/srv/apps/tapitise/src/
+#   ssh ops@10.10.10.1
+#   cd /srv/apps/tapitise && sudo docker compose up -d --build
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  web:
+    build:
+      context: ./src
+      args:
+        NEXT_PUBLIC_APP_ID: ${NEXT_PUBLIC_APP_ID:?defina NEXT_PUBLIC_APP_ID no .env}
+        NEXT_PUBLIC_APP_KEY: ${NEXT_PUBLIC_APP_KEY:?defina NEXT_PUBLIC_APP_KEY no .env}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?defina NEXT_PUBLIC_API_URL no .env}
+        NEXT_PUBLIC_APP_TYPE_WORKFLOW: ${NEXT_PUBLIC_APP_TYPE_WORKFLOW:-}
+        NEXT_PUBLIC_APP_BASE_URL_PATH: ${NEXT_PUBLIC_APP_BASE_URL_PATH:-}
+        NEXT_PUBLIC_API_PREFIX: ${NEXT_PUBLIC_API_PREFIX:-}
+    image: tapitise-webapp:local
+    container_name: tapitise
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      # AUTH_* sao lidos em runtime pelo middleware/rotas de login (server-side).
+      # Nunca entram no build: girar AUTH_SESSION_SECRET invalida as sessoes.
+      AUTH_USER_AFUJII_HASH: ${AUTH_USER_AFUJII_HASH:?defina AUTH_USER_AFUJII_HASH no .env}
+      AUTH_USER_BCHENQUE_HASH: ${AUTH_USER_BCHENQUE_HASH:?defina AUTH_USER_BCHENQUE_HASH no .env}
+      AUTH_SESSION_SECRET: ${AUTH_SESSION_SECRET:?defina AUTH_SESSION_SECRET no .env}
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.tapitise.rule=Host(`tapitise.arthurfujii.com.br`)"
+      - "traefik.http.routers.tapitise.entrypoints=websecure"
+      - "traefik.http.routers.tapitise.tls=true"
+      - "traefik.http.services.tapitise.loadbalancer.server.port=3000"
+      # Publico: security-headers; VPN-whitelist NAO se aplica (o trafego
+      # volta pela borda Cloudflare, nunca com IP 10.10.10.x)
+      - "traefik.http.routers.tapitise.middlewares=security-headers@file"
+      # --- Homepage (autodescoberta, cap. 49) ---
+      - "homepage.group=Aplicações"
+      - "homepage.name=Tapítise"
+      - "homepage.icon=mdi-text-box-edit"
+      - "homepage.href=https://tapitise.arthurfujii.com.br"
+      - "homepage.description=Gerador de textos com IA (Dify)"
+    healthcheck:
+      # node:19-slim nao tem curl/wget — healthcheck com node
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/login', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    mem_limit: 512m
+    memswap_limit: 512m
+    cpus: 1.0
+    pids_limit: 512
+    logging: *default-logging
+
+networks:
+  # Rede compartilhada do proxy reverso (externa, cap. 31/38)
+  proxy:
+    external: true
