@@ -28,6 +28,7 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+AUTH_CREDENTIALS.local.txt
 
 # vercel
 .vercel

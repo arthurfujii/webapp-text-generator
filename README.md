@@ -33,6 +33,38 @@ export const isShowPrompt = true
 export const promptTemplate = ''
 ```
 
+## Authentication
+
+The webapp is protected by a lightweight session-based login. Passwords are never stored in the repository: only scrypt hashes and a session signing secret are read from the environment.
+
+Add these variables to `.env.local` or to your hosting provider's environment settings:
+
+```bash
+AUTH_USER_AFUJII_HASH=
+AUTH_USER_BCHENQUE_HASH=
+AUTH_SESSION_SECRET=
+```
+
+Generate a password hash with:
+
+```bash
+npm run auth:hash
+```
+
+The command prints a strong random password and the corresponding hash. Copy the hash to the matching `AUTH_USER_<NAME>_HASH` variable and keep the password in a password manager. To use your own password instead, pass it as an argument: `npm run auth:hash -- 'your-password'`.
+
+Generate the session secret with:
+
+```bash
+openssl rand -hex 48
+```
+
+Sessions are stored in an HttpOnly, SameSite=Lax cookie valid for seven days. Use the account menu at the bottom-left of the app to sign out. Rotating `AUTH_SESSION_SECRET` invalidates all active sessions.
+
+For container deployments, pass the `AUTH_*` variables at runtime instead of baking them into the image. `.env.local` and the local credentials file are excluded through `.dockerignore`.
+
+For the complete architecture, login/session flow, operations, deployment notes, and troubleshooting, see [docs/authentication.md](docs/authentication.md) (in Portuguese).
+
 ## Getting Started
 
 First, install dependencies:

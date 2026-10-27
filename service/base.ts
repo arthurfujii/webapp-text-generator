@@ -1,5 +1,6 @@
 import { API_PREFIX } from '@/config'
 import Toast from '@/app/components/base/toast'
+import { redirectToLogin } from '@/lib/auth/browser'
 
 const TIME_OUT = 5 * 60 * 1000 // five minutes
 
@@ -241,7 +242,7 @@ const baseFetch = (url: string, fetchOptions: any, { needAllResponseContent }: I
               const bodyJson = res.json()
               switch (res.status) {
                 case 401: {
-                  Toast.notify({ type: 'error', message: 'Invalid token' })
+                  redirectToLogin()
                   return
                 }
                 default:
@@ -336,6 +337,10 @@ export const ssePost = (
 
   globalThis.fetch(urlWithPrefix, options)
     .then((res: any) => {
+      if (res.status === 401) {
+        redirectToLogin()
+        return
+      }
       if (!/^(2|3)\d{2}$/.test(res.status)) {
         // eslint-disable-next-line no-new
         new Promise(() => {

@@ -20,6 +20,7 @@ import { Resolution, TransferMethod } from '@/types/app'
 import { changeLanguage } from '@/i18n/i18next-config'
 import Loading from '@/app/components/base/loading'
 import AppUnavailable from '@/app/components/app-unavailable'
+import UserMenu from '@/app/components/user-menu'
 import { API_KEY, APP_ID, APP_INFO, DEFAULT_VALUE_MAX_LEN, IS_WORKFLOW } from '@/config'
 import { userInputsFormToPromptVariables } from '@/utils/prompt'
 
@@ -41,7 +42,11 @@ type Task = {
   params: TaskParam
 }
 
-const TextGeneration = () => {
+type TextGenerationProps = {
+  currentUser?: string
+}
+
+const TextGeneration = ({ currentUser }: TextGenerationProps) => {
   const { t } = useTranslation()
 
   const media = useBreakpoints()
@@ -531,20 +536,23 @@ const TextGeneration = () => {
           </div>
 
           {/* copyright */}
-          <div className='fixed left-4 bottom-4 flex max-w-[calc(100%-2rem)] space-x-2 text-gray-600 font-normal text-[11px] pc:left-8'>
-            <div className="">© {APP_INFO.copyright || APP_INFO.title} {(new Date()).getFullYear()}</div>
-            {APP_INFO.privacy_policy && (
-              <>
-                <div>·</div>
-                <div>{t('app.generation.privacyPolicyLeft')}
-                  <a
-                    className='text-forest-medium underline decoration-earth-amber/50 underline-offset-2 transition-colors hover:text-earth-amber-dark'
-                    href={APP_INFO.privacy_policy}
-                    target='_blank'>{t('app.generation.privacyPolicyMiddle')}</a>
-                  {t('app.generation.privacyPolicyRight')}
-                </div>
-              </>
-            )}
+          <div className='absolute left-4 right-4 bottom-4 flex items-center justify-between gap-3 text-gray-600 font-normal text-[11px] pc:left-8 pc:right-8'>
+            <div className='flex min-w-0 items-center gap-2'>
+              <div className='whitespace-nowrap'>© {APP_INFO.copyright || APP_INFO.title} {(new Date()).getFullYear()}</div>
+              {APP_INFO.privacy_policy && (
+                <>
+                  <div>·</div>
+                  <div className='min-w-0 truncate'>{t('app.generation.privacyPolicyLeft')}
+                    <a
+                      className='text-forest-medium underline decoration-earth-amber/50 underline-offset-2 transition-colors hover:text-earth-amber-dark'
+                      href={APP_INFO.privacy_policy}
+                      target='_blank'>{t('app.generation.privacyPolicyMiddle')}</a>
+                    {t('app.generation.privacyPolicyRight')}
+                  </div>
+                </>
+              )}
+            </div>
+            {currentUser && <UserMenu username={currentUser} />}
           </div>
         </div>
 

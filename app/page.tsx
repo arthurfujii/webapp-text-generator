@@ -1,11 +1,13 @@
-import React from 'react'
-
+import { redirect } from 'next/navigation'
 import Main from '@/app/components'
+import { getSessionUsername } from '@/lib/auth/server'
 
-const App = () => {
-  return (
-    <Main />
-  )
+const App = async () => {
+  const currentUser = await getSessionUsername()
+  if (!currentUser)
+    redirect('/login')
+
+  return <Main currentUser={currentUser} />
 }
 
-export default React.memo(App)
+export default App

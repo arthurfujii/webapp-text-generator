@@ -1,0 +1,8 @@
+node_modules
+.next
+.git
+.env*.local
+AUTH_CREDENTIALS.local.txt
+npm-debug.log*
+yarn-error.log*
+.DS_Store

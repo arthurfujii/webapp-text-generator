@@ -13,6 +13,8 @@ export const APP_INFO: AppInfo = {
 
 export const API_PREFIX = `${process.env.NEXT_PUBLIC_API_PREFIX || '/api'}`
 
+export const APP_BASE_PATH = `${process.env.NEXT_PUBLIC_APP_BASE_URL_PATH || ''}`.replace(/\/+$/, '')
+
 export const LOCALE_COOKIE_NAME = 'locale'
 
 export const DEFAULT_VALUE_MAX_LEN = 48
