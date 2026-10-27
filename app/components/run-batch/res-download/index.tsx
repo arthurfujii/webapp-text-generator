@@ -7,7 +7,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import cn from 'classnames'
 import Download02 from '@/app/components/base/icons/solid/download-02'
-import Button from '@/app/components/base/button'
 export type IResDownloadProps = {
   isMobile: boolean
   values: Record<string, string>[]
@@ -31,10 +30,10 @@ const ResDownload: FC<IResDownloadProps> = ({
       }}
       data={values}
     >
-      <Button className={cn('flex items-center !h-8 space-x-2 bg-white !text-[13px] font-medium', isMobile ? '!p-0 !w-8 justify-center' : '!px-3')}>
-        <Download02 className='w-4 h-4 text-[#155EEF]' />
-        {!isMobile && <span className='text-[#155EEF]'>{t('common.operation.download')}</span>}
-      </Button>
+      <span className={cn('inline-flex h-9 select-none items-center justify-center space-x-2 rounded-sm border border-forest-dark bg-cream-base text-[13px] font-semibold leading-none text-forest-dark transition-colors duration-200 hover:bg-cream-light', isMobile ? 'w-9 p-0' : 'px-3')}>
+        <Download02 className='w-4 h-4 text-earth-amber-dark' />
+        {!isMobile && <span>{t('common.operation.download')}</span>}
+      </span>
     </CSVDownloader>
   )
 }

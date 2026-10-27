@@ -13,6 +13,7 @@ const translation = {
     refresh: '重新开始',
     search: '搜索',
     send: '发送',
+    select: '请选择',
     copy: '复制',
     lineBreak: '换行',
     like: '赞同',

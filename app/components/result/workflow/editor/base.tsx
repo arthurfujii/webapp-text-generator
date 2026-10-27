@@ -46,17 +46,17 @@ const Base: FC<Props> = ({
 
   return (
     <div className={cn(wrapClassName)}>
-      <div ref={ref} className={cn(className, isExpand && 'h-full', 'rounded-lg border', isFocus ? 'bg-white border-gray-200' : 'bg-gray-100 border-gray-100 overflow-hidden')}>
+      <div ref={ref} className={cn(className, isExpand && 'h-full', 'rounded-md border', isFocus ? 'bg-cream-light border-forest-medium' : 'bg-cream-base border-sand overflow-hidden')}>
         <div className='flex justify-between items-center h-7 pt-1 pl-3 pr-2'>
-          <div className='text-xs font-semibold text-gray-700'>{title}</div>
+          <div className='text-xs font-semibold text-forest-dark'>{title}</div>
           <div className='flex items-center'>
             {headerRight}
             {!isCopied
               ? (
-                <Clipboard className='mx-1 w-3.5 h-3.5 text-gray-500 cursor-pointer' onClick={handleCopy} />
+                <Clipboard className='mx-1 w-3.5 h-3.5 text-forest-medium cursor-pointer hover:text-earth-amber-dark' onClick={handleCopy} />
               )
               : (
-                <ClipboardCheck className='mx-1 w-3.5 h-3.5 text-gray-500' />
+                <ClipboardCheck className='mx-1 w-3.5 h-3.5 text-success' />
               )
             }
             <div className='ml-1'>

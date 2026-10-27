@@ -34,41 +34,28 @@ const Toast = ({
   if (typeof message !== 'string')
     return null
 
-  return <div className={classNames(
-    'fixed rounded-md p-4 my-4 mx-8 z-50',
-    'top-0',
-    'right-0',
-    type === 'success' ? 'bg-green-50' : '',
-    type === 'error' ? 'bg-red-50' : '',
-    type === 'warning' ? 'bg-yellow-50' : '',
-    type === 'info' ? 'bg-blue-50' : '',
-  )}>
+  return <div
+    role={(type === 'error' || type === 'warning') ? 'alert' : 'status'}
+    aria-live="polite"
+    className={classNames(
+      'fixed z-50 my-4 mx-4 max-w-sm rounded-md border border-sand bg-cream-light p-4 shadow-woodcut sm:mx-8',
+      'top-0',
+      'right-0',
+      type === 'success' ? 'border-l-4 border-l-success' : '',
+      type === 'error' ? 'border-l-4 border-l-error' : '',
+      type === 'warning' ? 'border-l-4 border-l-warning' : '',
+      type === 'info' ? 'border-l-4 border-l-info' : '',
+    )}>
     <div className="flex">
       <div className="flex-shrink-0">
-        {type === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-400" aria-hidden="true" />}
-        {type === 'error' && <XCircleIcon className="w-5 h-5 text-red-400" aria-hidden="true" />}
-        {type === 'warning' && <ExclamationTriangleIcon className="w-5 h-5 text-yellow-400" aria-hidden="true" />}
-        {type === 'info' && <InformationCircleIcon className="w-5 h-5 text-blue-400" aria-hidden="true" />}
+        {type === 'success' && <CheckCircleIcon className="w-5 h-5 text-success" aria-hidden="true" />}
+        {type === 'error' && <XCircleIcon className="w-5 h-5 text-error" aria-hidden="true" />}
+        {type === 'warning' && <ExclamationTriangleIcon className="w-5 h-5 text-warning" aria-hidden="true" />}
+        {type === 'info' && <InformationCircleIcon className="w-5 h-5 text-info" aria-hidden="true" />}
       </div>
       <div className="ml-3">
-        <h3 className={
-          classNames(
-            'text-sm font-medium',
-            type === 'success' ? 'text-green-800' : '',
-            type === 'error' ? 'text-red-800' : '',
-            type === 'warning' ? 'text-yellow-800' : '',
-            type === 'info' ? 'text-blue-800' : '',
-          )
-        }>{message}</h3>
-        {children && <div className={
-          classNames(
-            'mt-2 text-sm',
-            type === 'success' ? 'text-green-700' : '',
-            type === 'error' ? 'text-red-700' : '',
-            type === 'warning' ? 'text-yellow-700' : '',
-            type === 'info' ? 'text-blue-700' : '',
-          )
-        }>
+        <h3 className="text-sm font-semibold leading-relaxed text-forest-dark">{message}</h3>
+        {children && <div className="mt-2 text-sm text-gray-700">
           {children}
         </div>
         }

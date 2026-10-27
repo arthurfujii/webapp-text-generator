@@ -23,9 +23,9 @@ type BlockIconProps = {
   toolIcon?: string | { content: string; background: string }
 }
 const ICON_CONTAINER_CLASSNAME_SIZE_MAP: Record<string, string> = {
-  xs: 'w-4 h-4 rounded-[5px] shadow-xs',
-  sm: 'w-5 h-5 rounded-md shadow-xs',
-  md: 'w-6 h-6 rounded-lg shadow-md',
+  xs: 'w-4 h-4 rounded-sm shadow-soft',
+  sm: 'w-5 h-5 rounded-sm shadow-soft',
+  md: 'w-6 h-6 rounded-md shadow-soft',
 }
 const getIcon = (type: BlockEnum, className: string) => {
   return {
@@ -44,17 +44,17 @@ const getIcon = (type: BlockEnum, className: string) => {
   }[type]
 }
 const ICON_CONTAINER_BG_COLOR_MAP: Record<string, string> = {
-  [BlockEnum.Start]: 'bg-[#2970FF]',
-  [BlockEnum.LLM]: 'bg-[#6172F3]',
-  [BlockEnum.Code]: 'bg-[#2E90FA]',
-  [BlockEnum.End]: 'bg-[#F79009]',
-  [BlockEnum.IfElse]: 'bg-[#06AED4]',
-  [BlockEnum.HttpRequest]: 'bg-[#875BF7]',
-  [BlockEnum.Answer]: 'bg-[#F79009]',
-  [BlockEnum.KnowledgeRetrieval]: 'bg-[#16B364]',
-  [BlockEnum.QuestionClassifier]: 'bg-[#16B364]',
-  [BlockEnum.TemplateTransform]: 'bg-[#2E90FA]',
-  [BlockEnum.VariableAssigner]: 'bg-[#2E90FA]',
+  [BlockEnum.Start]: 'bg-forest-dark',
+  [BlockEnum.LLM]: 'bg-earth-amber',
+  [BlockEnum.Code]: 'bg-info',
+  [BlockEnum.End]: 'bg-warning',
+  [BlockEnum.IfElse]: 'bg-forest-medium',
+  [BlockEnum.HttpRequest]: 'bg-[#6B5A45]',
+  [BlockEnum.Answer]: 'bg-warning',
+  [BlockEnum.KnowledgeRetrieval]: 'bg-success',
+  [BlockEnum.QuestionClassifier]: 'bg-success',
+  [BlockEnum.TemplateTransform]: 'bg-info',
+  [BlockEnum.VariableAssigner]: 'bg-info',
 }
 const BlockIcon: FC<BlockIconProps> = ({
   type,
@@ -64,7 +64,7 @@ const BlockIcon: FC<BlockIconProps> = ({
 }) => {
   return (
     <div className={`
-      flex items-center justify-center border-[0.5px] border-white/[0.02] text-white
+      flex items-center justify-center border border-charcoal/10 text-cream-base rounded-sm
       ${ICON_CONTAINER_CLASSNAME_SIZE_MAP[size]} 
       ${ICON_CONTAINER_BG_COLOR_MAP[type]}
       ${toolIcon && '!shadow-none'}

@@ -27,17 +27,17 @@ const CSVDownload: FC<ICSVDownloadProps> = ({
 
   return (
     <div className='mt-6'>
-      <div className='text-sm text-gray-900 font-medium'>{t('app.generation.csvStructureTitle')}</div>
+      <div className='field-label'>{t('app.generation.csvStructureTitle')}</div>
       <div className='mt-2 max-h-[500px] overflow-auto'>
-        <table className='w-full border-separate border-spacing-0 border border-gray-200 rounded-lg text-xs'>
-          <thead className='text-gray-500'>
+        <table className='w-full border-collapse overflow-hidden rounded-md border border-sand text-xs'>
+          <thead className='bg-cream-base text-forest-medium'>
             <tr>
               {addQueryContentVars.map((item, i) => (
-                <td key={i} className='h-9 pl-4 border-b border-gray-200'>{item.name}</td>
+                <td key={i} className='h-9 border-b border-sand pl-4 font-semibold uppercase tracking-wide'>{item.name}</td>
               ))}
             </tr>
           </thead>
-          <tbody className='text-gray-300'>
+          <tbody className='text-gray-600'>
             <tr>
               {addQueryContentVars.map((item, i) => (
                 <td key={i} className='h-9 pl-4'>{item.name} {t('app.generation.field')}</td>
@@ -47,7 +47,7 @@ const CSVDownload: FC<ICSVDownloadProps> = ({
         </table>
       </div>
       <CSVDownloader
-        className="block mt-2 cursor-pointer"
+        className="block mt-3 cursor-pointer"
         type={Type.Link}
         filename={'template'}
         bom={true}
@@ -58,9 +58,9 @@ const CSVDownload: FC<ICSVDownloadProps> = ({
           template,
         ]}
       >
-        <div className='flex items-center h-[18px] space-x-1 text-[#155EEF] text-xs font-medium'>
-          <Download02 className='w-3 h-3' />
-          <span>{t('app.generation.downloadTemplate')}</span>
+        <div className='flex items-center h-[18px] space-x-1.5 text-xs font-semibold text-forest-dark transition-colors hover:text-earth-amber-dark'>
+          <Download02 className='w-3.5 h-3.5' />
+          <span className='underline decoration-earth-amber/50 underline-offset-4'>{t('app.generation.downloadTemplate')}</span>
         </div>
       </CSVDownloader>
     </div>

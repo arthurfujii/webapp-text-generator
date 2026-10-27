@@ -28,6 +28,7 @@ export type ISelectProps = {
   onSelect: (value: Item) => void
   allowSearch?: boolean
   bgClassName?: string
+  placeholder?: string
 }
 const Select: FC<ISelectProps> = ({
   className,
@@ -36,7 +37,8 @@ const Select: FC<ISelectProps> = ({
   disabled = false,
   onSelect,
   allowSearch = true,
-  bgClassName = 'bg-gray-100',
+  bgClassName = 'bg-cream-light',
+  placeholder = 'Select an option',
 }) => {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -58,6 +60,8 @@ const Select: FC<ISelectProps> = ({
         return item.name.toLowerCase().includes(query.toLowerCase())
       })
 
+  const triggerClass = `flex h-10 w-full items-center rounded-sm border-[1.5px] border-sand ${bgClassName} py-1.5 pl-3 pr-10 text-left text-sm text-charcoal shadow-none outline-none transition-all duration-200 hover:border-forest-light focus-visible:border-forest-dark focus-visible:ring-2 focus-visible:ring-earth-amber/35`
+
   return (
     <Combobox
       as="div"
@@ -72,10 +76,11 @@ const Select: FC<ISelectProps> = ({
         }
       }}>
       <div className={classNames('relative')}>
-        <div className='group text-gray-800'>
+        <div className='group text-charcoal'>
           {allowSearch
             ? <Combobox.Input
-              className={`w-full rounded-lg border-0 ${bgClassName} py-1.5 pl-3 pr-10 shadow-sm sm:text-sm sm:leading-6 focus-visible:outline-none focus-visible:bg-gray-200 group-hover:bg-gray-200 cursor-not-allowed`}
+              className={`${triggerClass} cursor-text`}
+              placeholder={placeholder}
               onChange={(event) => {
                 if (!disabled)
                   setQuery(event.target.value)
@@ -87,42 +92,44 @@ const Select: FC<ISelectProps> = ({
                 if (!disabled)
                   setOpen(!open)
               }
-            } className={`flex items-center h-9 w-full rounded-lg border-0 ${bgClassName} py-1.5 pl-3 pr-10 shadow-sm sm:text-sm sm:leading-6 focus-visible:outline-none focus-visible:bg-gray-200 group-hover:bg-gray-200`}>
-              {selectedItem?.name}
+            } className={`${triggerClass} ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}>
+              <span className={classNames('block truncate', !selectedItem && 'text-muted')}>
+                {selectedItem?.name || placeholder}
+              </span>
             </Combobox.Button>}
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none group-hover:bg-gray-200" onClick={
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-sm px-2 text-forest-medium focus:outline-none" onClick={
             () => {
               if (!disabled)
                 setOpen(!open)
             }
           }>
-            {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+            {open ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
           </Combobox.Button>
         </div>
 
         {filteredItems.length > 0 && (
-          <Combobox.Options className="absolute z-10 mt-1 px-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg border-gray-200 border-[0.5px] focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-sand bg-cream-light px-1 py-1 text-sm shadow-woodcut focus:outline-none">
             {filteredItems.map((item: Item) => (
               <Combobox.Option
                 key={item.value}
                 value={item}
                 className={({ active }: { active: boolean }) =>
                   classNames(
-                    'relative cursor-default select-none py-2 pl-3 pr-9 rounded-lg hover:bg-gray-100 text-gray-700',
-                    active ? 'bg-gray-100' : '',
+                    'relative cursor-pointer select-none rounded-sm py-2 pl-3 pr-9 text-gray-700 transition-colors',
+                    active ? 'bg-cream-base text-forest-dark' : 'hover:bg-cream-base',
                   )
                 }
               >
                 {({ /* active, */ selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-normal')}>{item.name}</span>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{item.name}</span>
                     {selected && (
                       <span
                         className={classNames(
-                          'absolute inset-y-0 right-0 flex items-center pr-4 text-gray-700',
+                          'absolute inset-y-0 right-0 flex items-center pr-4 text-earth-amber-dark',
                         )}
                       >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                        <CheckIcon className="h-4 w-4" aria-hidden="true" />
                       </span>
                     )}
                   </>
@@ -163,12 +170,12 @@ const SimpleSelect: FC<ISelectProps> = ({
         }
       }}
     >
-      <div className="relative h-9">
-        <Listbox.Button className={`w-full h-full rounded-lg border-0 bg-gray-100 py-1.5 pl-3 pr-10 shadow-sm sm:text-sm sm:leading-6 focus-visible:outline-none focus-visible:bg-gray-200 group-hover:bg-gray-200 cursor-pointer ${className}`}>
-          <span className="block truncate text-left">{selectedItem?.name}</span>
+      <div className="relative h-10">
+        <Listbox.Button className={`h-full w-full rounded-sm border-[1.5px] border-sand bg-cream-light py-1.5 pl-3 pr-10 text-left text-sm text-charcoal shadow-none outline-none transition-all duration-200 hover:border-forest-light focus-visible:border-forest-dark focus-visible:ring-2 focus-visible:ring-earth-amber/35 ${className}`}>
+          <span className="block truncate">{selectedItem?.name}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDownIcon
-              className="h-5 w-5 text-gray-400"
+              className="h-4 w-4 text-forest-medium"
               aria-hidden="true"
             />
           </span>
@@ -179,12 +186,12 @@ const SimpleSelect: FC<ISelectProps> = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute z-10 mt-1 px-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg border-gray-200 border-[0.5px] focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-sand bg-cream-light px-1 py-1 text-sm shadow-woodcut focus:outline-none">
             {items.map((item: Item) => (
               <Listbox.Option
                 key={item.value}
                 className={({ active }) =>
-                  `relative cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg hover:bg-gray-100 text-gray-700 ${active ? 'bg-gray-100' : ''
+                  `relative cursor-pointer select-none rounded-sm py-2 pl-3 pr-9 text-gray-700 hover:bg-cream-base ${active ? 'bg-cream-base text-forest-dark' : ''
                   }`
                 }
                 value={item}
@@ -192,14 +199,14 @@ const SimpleSelect: FC<ISelectProps> = ({
               >
                 {({ /* active, */ selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-normal')}>{item.name}</span>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{item.name}</span>
                     {selected && (
                       <span
                         className={classNames(
-                          'absolute inset-y-0 right-0 flex items-center pr-4 text-gray-700',
+                          'absolute inset-y-0 right-0 flex items-center pr-4 text-earth-amber-dark',
                         )}
                       >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                        <CheckIcon className="h-4 w-4" aria-hidden="true" />
                       </span>
                     )}
                   </>

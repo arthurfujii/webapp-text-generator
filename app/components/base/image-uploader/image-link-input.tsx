@@ -28,16 +28,16 @@ const ImageLinkInput: FC<ImageLinkInputProps> = ({
   }
 
   return (
-    <div className='flex items-center pl-1.5 pr-1 h-8 border border-gray-200 bg-white shadow-xs rounded-lg'>
+    <div className='flex h-10 items-center rounded-sm border-[1.5px] border-sand bg-cream-light pl-2 pr-1'>
       <input
-        className='grow mr-0.5 px-1 h-[18px] text-[13px] outline-none appearance-none'
+        className='grow mr-1 h-[22px] appearance-none bg-transparent px-1 text-[13px] text-charcoal outline-none placeholder:text-muted'
         value={imageLink}
         onChange={e => setImageLink(e.target.value)}
         placeholder={t('common.imageUploader.pasteImageLinkInputPlaceholder') || ''}
       />
       <Button
         type='primary'
-        className='!h-6 text-xs font-medium'
+        className='!h-7 !px-3 text-xs font-semibold'
         disabled={!imageLink}
         onClick={handleClick}
       >

@@ -4,7 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ClipboardDocumentIcon, HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/react/24/outline'
 import copy from 'copy-to-clipboard'
-import type { Feedbacktype } from '@/app/components/app/chat/type'
+import type { Feedbacktype } from '@/types/app'
 import Button from '@/app/components/base/button'
 import Toast from '@/app/components/base/toast'
 import Tooltip from '@/app/components/base/tooltip'
@@ -25,7 +25,7 @@ const Header: FC<IResultHeaderProps> = ({
   const { t } = useTranslation()
   return (
     <div className='flex w-full justify-between items-center '>
-      <div className='text-gray-800 text-2xl leading-4 font-normal'>{t('app.generation.resultTitle')}</div>
+      <div className='font-display text-2xl leading-none text-forest-dark'>{t('app.generation.resultTitle')}</div>
       <div className='flex items-center space-x-2'>
         <Button
           className='flex items-center !h-7 !p-[2px] !pr-2'
@@ -35,8 +35,8 @@ const Header: FC<IResultHeaderProps> = ({
           }}
         >
           <>
-            <ClipboardDocumentIcon className='text-gray-500 w-4 h-3 mr-1' />
-            <span className='text-gray-500 text-xs leading-3'>{t('app.generation.copy')}</span>
+            <ClipboardDocumentIcon className='text-forest-medium w-4 h-3 mr-1' />
+            <span className='text-forest-medium text-xs leading-3'>{t('app.generation.copy')}</span>
           </>
         </Button>
 
@@ -51,7 +51,7 @@ const Header: FC<IResultHeaderProps> = ({
                   rating: null,
                 })
               }}
-              className='flex w-7 h-7 items-center justify-center rounded-md cursor-pointer  !text-primary-600 border border-primary-200 bg-primary-100 hover:border-primary-300 hover:bg-primary-200'>
+              className='flex w-7 h-7 items-center justify-center rounded-sm cursor-pointer border border-forest-medium bg-cream-base text-forest-dark hover:bg-cream-light'>
               <HandThumbUpIcon width={16} height={16} />
             </div>
           </Tooltip>
@@ -68,14 +68,14 @@ const Header: FC<IResultHeaderProps> = ({
                   rating: null,
                 })
               }}
-              className='flex w-7 h-7 items-center justify-center rounded-md cursor-pointer  !text-red-600 border border-red-200 bg-red-100 hover:border-red-300 hover:bg-red-200'>
+              className='flex w-7 h-7 items-center justify-center rounded-sm cursor-pointer border border-error/40 bg-error-light text-error hover:bg-error-light/70'>
               <HandThumbDownIcon width={16} height={16} />
             </div>
           </Tooltip>
         )}
 
         {showFeedback && !feedback.rating && (
-          <div className='flex rounded-lg border border-gray-200 p-[1px] space-x-1'>
+          <div className='flex rounded-sm border border-sand p-[1px] space-x-1'>
             <Tooltip
               selector="feedback-like"
               content="Great Rating"
@@ -86,7 +86,7 @@ const Header: FC<IResultHeaderProps> = ({
                     rating: 'like',
                   })
                 }}
-                className='flex w-6 h-6 items-center justify-center rounded-md cursor-pointer hover:bg-gray-100'>
+                className='flex w-6 h-6 items-center justify-center rounded-sm cursor-pointer text-forest-medium hover:bg-cream-base hover:text-forest-dark'>
                 <HandThumbUpIcon width={16} height={16} />
               </div>
             </Tooltip>
@@ -100,7 +100,7 @@ const Header: FC<IResultHeaderProps> = ({
                     rating: 'dislike',
                   })
                 }}
-                className='flex w-6 h-6 items-center justify-center rounded-md cursor-pointer hover:bg-gray-100'>
+                className='flex w-6 h-6 items-center justify-center rounded-sm cursor-pointer text-forest-medium hover:bg-cream-base hover:text-error'>
                 <HandThumbDownIcon width={16} height={16} />
               </div>
             </Tooltip>

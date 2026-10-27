@@ -8,7 +8,7 @@ export type IButtonProps = {
   disabled?: boolean
   loading?: boolean
   children: React.ReactNode
-  onClick?: MouseEventHandler<HTMLDivElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 const Button: FC<IButtonProps> = ({
@@ -19,25 +19,40 @@ const Button: FC<IButtonProps> = ({
   onClick,
   loading = false,
 }) => {
-  let style = 'cursor-pointer'
+  const isDisabled = disabled || loading
+  const base = 'inline-flex h-10 select-none items-center justify-center gap-1.5 rounded-sm border px-4 text-sm font-semibold leading-none transition-all duration-200 ease-out'
+
+  let style = ''
   switch (type) {
     case 'primary':
-      style = (disabled || loading) ? 'bg-primary-600/75 cursor-not-allowed text-white' : 'bg-primary-600 hover:bg-primary-600/75 hover:shadow-md cursor-pointer text-white hover:shadow-sm'
+      style = isDisabled
+        ? 'cursor-not-allowed border-sand bg-sand text-charcoal/45 shadow-none'
+        : 'cursor-pointer border-forest-dark bg-forest-dark text-cream-base shadow-woodcut hover:-translate-y-px hover:border-forest-medium hover:bg-forest-medium active:translate-y-0 active:shadow-[2px_2px_0px_#181C19]'
+      break
+    case 'ghost':
+      style = isDisabled
+        ? 'cursor-not-allowed border-transparent bg-transparent text-charcoal/35'
+        : 'cursor-pointer border-transparent bg-transparent text-forest-medium hover:border-sand hover:bg-cream-base hover:text-forest-dark'
       break
     default:
-      style = disabled ? 'border-solid border border-gray-200 bg-gray-200 cursor-not-allowed text-gray-800' : 'border-solid border border-gray-200 cursor-pointer text-gray-500 hover:bg-white hover:shadow-sm hover:border-gray-300'
+      style = isDisabled
+        ? 'cursor-not-allowed border-sand bg-sand text-charcoal/45 shadow-none'
+        : 'cursor-pointer border-[1.5px] border-forest-dark bg-cream-base text-forest-dark hover:bg-cream-light hover:shadow-soft'
       break
   }
 
   return (
-    <div
-      className={`flex justify-center items-center content-center h-9 leading-5 rounded-lg px-4 py-2 text-base ${style} ${className && className}`}
-      onClick={disabled ? undefined : onClick}
+    <button
+      type="button"
+      disabled={isDisabled}
+      aria-busy={loading}
+      className={`${base} ${style} ${className && className}`}
+      onClick={isDisabled ? undefined : onClick}
     >
       {children}
       {/* Spinner is hidden when loading is false */}
-      <Spinner loading={loading} className='!text-white !h-3 !w-3 !border-2 !ml-1' />
-    </div>
+      <Spinner loading={loading} className={`!ml-1 !h-3 !w-3 !border-2 ${(type === 'primary' && !isDisabled) ? '!text-cream-base' : '!text-forest-dark'}`} />
+    </button>
   )
 }
 

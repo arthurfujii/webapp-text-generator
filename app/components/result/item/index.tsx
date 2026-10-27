@@ -41,12 +41,14 @@ export const SimpleBtn = ({ className, isDisabled, onClick, children }: {
   onClick?: () => void
   children: React.ReactNode
 }) => (
-  <div
-    className={cn(className, isDisabled ? 'border-gray-100 text-gray-300' : 'border-gray-200 text-gray-700 cursor-pointer hover:border-gray-300 hover:shadow-sm', 'flex items-center h-7 px-3 rounded-md border text-xs  font-medium')}
+  <button
+    type="button"
+    disabled={isDisabled}
+    className={cn(className, isDisabled ? 'border-sand/60 text-muted/50 cursor-not-allowed' : 'border-sand bg-cream-base text-forest-dark cursor-pointer hover:border-forest-medium hover:bg-cream-light', 'flex h-7 items-center rounded-sm border px-3 text-xs font-semibold transition-colors duration-200')}
     onClick={() => !isDisabled && onClick?.()}
   >
     {children}
-  </div>
+  </button>
 )
 
 export const copyIcon = (
@@ -104,12 +106,12 @@ const GenerationItem: FC<IGenerationItemProps> = ({
   const mainStyle = (() => {
     const res: React.CSSProperties = !isTop
       ? {
-        background: depth % 2 === 0 ? 'linear-gradient(90.07deg, #F9FAFB 0.05%, rgba(249, 250, 251, 0) 99.93%)' : '#fff',
+        background: depth % 2 === 0 ? 'linear-gradient(90.07deg, #FAF6EC 0.05%, rgba(250, 246, 236, 0) 99.93%)' : '#F4EFE2',
       }
       : {}
 
     if (hasChild)
-      res.boxShadow = '0px 1px 2px rgba(16, 24, 40, 0.05)'
+      res.boxShadow = '0px 1px 2px rgba(24, 28, 25, 0.06)'
 
     return res
   })()
@@ -121,12 +123,7 @@ const GenerationItem: FC<IGenerationItemProps> = ({
   }, [isLoading])
 
   return (
-    <div className={cn(className, isTop ? `rounded-xl border ${!isError ? 'border-gray-200 bg-white' : 'border-[#FECDCA] bg-[#FEF3F2]'} ` : 'rounded-br-xl !mt-0')}
-      style={isTop
-        ? {
-          boxShadow: '0px 1px 2px rgba(16, 24, 40, 0.05)',
-        }
-        : {}}
+    <div className={cn(className, isTop ? `rounded-lg border shadow-woodcut ${!isError ? 'border-sand bg-cream-light' : 'border-error/40 bg-error-light/50'} ` : 'rounded-br-lg !mt-0')}
     >
       {isLoading
         ? (
@@ -134,12 +131,12 @@ const GenerationItem: FC<IGenerationItemProps> = ({
         )
         : (
           <div
-            className={cn(!isTop && 'rounded-br-xl border-l-2 border-primary-400', 'p-4')}
+            className={cn(!isTop && 'rounded-br-lg border-l-2 border-earth-amber/70', 'p-4')}
             style={mainStyle}
           >
             {(isTop && taskId) && (
-              <div className='mb-2 text-gray-500 border border-gray-200 box-border flex items-center rounded-md italic text-[11px] pl-1 pr-1.5 font-medium w-fit group-hover:opacity-100'>
-                <HashtagIcon className='w-3 h-3 text-gray-400 fill-current mr-1 stroke-current stroke-1' />
+              <div className='mb-3 flex w-fit items-center rounded-full border border-sand bg-cream-base pl-1.5 pr-2 text-[11px] font-semibold italic tracking-wide text-forest-medium group-hover:opacity-100'>
+                <HashtagIcon className='w-3 h-3 text-earth-amber-dark fill-current mr-1 stroke-current stroke-1' />
                 {taskId}
               </div>)
             }
@@ -149,7 +146,7 @@ const GenerationItem: FC<IGenerationItemProps> = ({
                   <WorkflowProcessItem grayBg hideInfo data={workflowProcessData} expand={workflowProcessData.expand} />
                 )}
                 {isError && (
-                  <div className='text-gray-400 text-sm'>{t('app.generation.batchFailed.outputPlaceholder')}</div>
+                  <div className='text-sm text-error'>{t('app.generation.batchFailed.outputPlaceholder')}</div>
                 )}
                 {!isError && (typeof content === 'string') && (
                   <Markdown content={content} />
@@ -166,7 +163,7 @@ const GenerationItem: FC<IGenerationItemProps> = ({
               </div>
             </div>
 
-            <div className='flex items-center justify-between mt-3'>
+            <div className='mt-4 flex items-center justify-between border-t border-sand/60 pt-3'>
               <div className='flex items-center'>
                 <SimpleBtn
                   isDisabled={isError || !messageId}
@@ -190,64 +187,70 @@ const GenerationItem: FC<IGenerationItemProps> = ({
                       <RefreshCcw01 className='w-3.5 h-3.5' />
                       {!isMobile && <div>{t('app.generation.batchFailed.retry')}</div>}
                     </SimpleBtn>}
-                    {!isWorkflow && !isError && messageId && <div className="mx-3 w-[1px] h-[14px] bg-gray-200"></div>}
+                    {!isWorkflow && !isError && messageId && <div className="mx-3 w-[1px] h-[14px] bg-sand"></div>}
                     {!isWorkflow && !isError && messageId && !feedback?.rating && (
-                      <SimpleBtn className="!px-0">
-                        <>
-                          <div
-                            onClick={() => {
-                              onFeedback?.({
-                                rating: 'like',
-                              })
-                            }}
-                            className='flex w-6 h-6 items-center justify-center rounded-md cursor-pointer hover:bg-gray-100'>
-                            <HandThumbUpIcon width={16} height={16} />
-                          </div>
-                          <div
-                            onClick={() => {
-                              onFeedback?.({
-                                rating: 'dislike',
-                              })
-                            }}
-                            className='flex w-6 h-6 items-center justify-center rounded-md cursor-pointer hover:bg-gray-100'>
-                            <HandThumbDownIcon width={16} height={16} />
-                          </div>
-                        </>
-                      </SimpleBtn>
+                      <div className='flex items-center gap-1'>
+                        <button
+                          type='button'
+                          aria-label={String(t('common.operation.like'))}
+                          onClick={() => {
+                            onFeedback?.({
+                              rating: 'like',
+                            })
+                          }}
+                          className='flex w-7 h-7 items-center justify-center rounded-sm text-forest-medium transition-colors hover:bg-cream-base hover:text-forest-dark'>
+                          <HandThumbUpIcon width={16} height={16} />
+                        </button>
+                        <button
+                          type='button'
+                          aria-label={String(t('common.operation.dislike'))}
+                          onClick={() => {
+                            onFeedback?.({
+                              rating: 'dislike',
+                            })
+                          }}
+                          className='flex w-7 h-7 items-center justify-center rounded-sm text-forest-medium transition-colors hover:bg-cream-base hover:text-error'>
+                          <HandThumbDownIcon width={16} height={16} />
+                        </button>
+                      </div>
                     )}
                     {!isWorkflow && !isError && messageId && feedback?.rating === 'like' && (
-                      <div
+                      <button
+                        type='button'
+                        aria-label={String(t('common.operation.like'))}
                         onClick={() => {
                           onFeedback?.({
                             rating: null,
                           })
                         }}
-                        className='flex w-7 h-7 items-center justify-center rounded-md cursor-pointer  !text-primary-600 border border-primary-200 bg-primary-100 hover:border-primary-300 hover:bg-primary-200'>
+                        className='flex w-7 h-7 items-center justify-center rounded-sm cursor-pointer border border-forest-medium bg-cream-base text-forest-dark hover:bg-cream-light'>
                         <HandThumbUpIcon width={16} height={16} />
-                      </div>
+                      </button>
                     )}
                     {!isWorkflow && !isError && messageId && feedback?.rating === 'dislike' && (
-                      <div
+                      <button
+                        type='button'
+                        aria-label={String(t('common.operation.dislike'))}
                         onClick={() => {
                           onFeedback?.({
                             rating: null,
                           })
                         }}
-                        className='flex w-7 h-7 items-center justify-center rounded-md cursor-pointer  !text-red-600 border border-red-200 bg-red-100 hover:border-red-300 hover:bg-red-200'>
+                        className='flex w-7 h-7 items-center justify-center rounded-sm cursor-pointer border border-error/40 bg-error-light text-error hover:bg-error-light/70'>
                         <HandThumbDownIcon width={16} height={16} />
-                      </div>
+                      </button>
                     )}
                   </>
                 )}
               </div>
-              <div className='text-xs text-gray-500'>{content?.length} {t('common.unit.char')}</div>
+              <div className='text-xs font-medium tabular-nums text-gray-600'>{content?.length} {t('common.unit.char')}</div>
             </div>
 
           </div>
         )}
 
       {((childMessageId || isQuerying) && depth < 3) && (
-        <div className='pl-4'>
+        <div className='border-t border-sand/50 pl-4'>
           <GenerationItem {...childProps as any} />
         </div>
       )}

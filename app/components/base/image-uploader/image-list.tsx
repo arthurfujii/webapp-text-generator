@@ -45,7 +45,7 @@ const ImageList: FC<ImageListProps> = ({
         list.map(item => (
           <div
             key={item._id}
-            className='group relative mr-1 border-[0.5px] border-black/5 rounded-lg'
+            className='group relative mr-2 border border-sand/80 rounded-sm'
           >
             {
               item.type === TransferMethod.local_file && item.progress !== 100 && (
@@ -72,7 +72,7 @@ const ImageList: FC<ImageListProps> = ({
               item.type === TransferMethod.remote_url && item.progress !== 100 && (
                 <div className={`
                   absolute inset-0 flex items-center justify-center rounded-lg z-[1] border
-                  ${item.progress === -1 ? 'bg-[#FEF0C7] border-[#DC6803]' : 'bg-black/[0.16] border-transparent'}
+                  ${item.progress === -1 ? 'bg-warning-light border-warning' : 'bg-black/[0.16] border-transparent'}
                 `}>
                   {
                     item.progress > -1 && (
@@ -82,7 +82,7 @@ const ImageList: FC<ImageListProps> = ({
                   {
                     item.progress === -1 && (
                       <TooltipPlus popupContent={t('common.imageUploader.pasteImageLinkInvalid')}>
-                        <AlertTriangle className='w-4 h-4 text-[#DC6803]' />
+                        <AlertTriangle className='w-4 h-4 text-warning' />
                       </TooltipPlus>
                     )
                   }
@@ -90,7 +90,7 @@ const ImageList: FC<ImageListProps> = ({
               )
             }
             <img
-              className='w-16 h-16 rounded-lg object-cover cursor-pointer border-[0.5px] border-black/5'
+              className='w-16 h-16 rounded-sm object-cover cursor-pointer border border-sand/60'
               alt=''
               onLoad={() => handleImageLinkLoadSuccess(item)}
               onError={() => handleImageLinkLoadError(item)}
@@ -101,14 +101,14 @@ const ImageList: FC<ImageListProps> = ({
               !readonly && (
                 <div
                   className={`
-                    absolute z-10 -top-[9px] -right-[9px] items-center justify-center w-[18px] h-[18px] 
-                    bg-white hover:bg-gray-50 border-[0.5px] border-black/[0.02] rounded-2xl shadow-lg
+                    absolute z-10 -top-[9px] -right-[9px] items-center justify-center w-[18px] h-[18px]
+                    bg-cream-light hover:bg-cream-base border border-sand rounded-full shadow-soft
                     cursor-pointer
                     ${item.progress === -1 ? 'flex' : 'hidden group-hover:flex'}
                   `}
                   onClick={() => onRemove && onRemove(item._id)}
                 >
-                  <XClose className='w-3 h-3 text-gray-500' />
+                  <XClose className='w-3 h-3 text-forest-dark' />
                 </div>
               )
             }

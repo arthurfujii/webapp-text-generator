@@ -41,23 +41,23 @@ const CSVReader: FC<Props> = ({
         <>
           <div
             {...getRootProps()}
-            className={cn(s.zone, zoneHover && s.zoneHover, acceptedFile ? 'px-6' : 'justify-center border-dashed text-gray-500')}
+            className={cn(s.zone, zoneHover && s.zoneHover, acceptedFile ? 'px-6' : 'justify-center')}
           >
             {
               acceptedFile
                 ? (
-                  <div className='w-full flex items-center space-x-2'>
+                  <div className='w-full flex items-center space-x-3'>
                     <Csv className="shrink-0" />
                     <div className='flex w-0 grow'>
-                      <span className='max-w-[calc(100%_-_30px)] text-ellipsis whitespace-nowrap overflow-hidden text-gray-800'>{acceptedFile.name.replace(/.csv$/, '')}</span>
-                      <span className='shrink-0 text-gray-500'>.csv</span>
+                      <span className='max-w-[calc(100%_-_30px)] text-ellipsis whitespace-nowrap overflow-hidden text-forest-dark'>{acceptedFile.name.replace(/.csv$/, '')}</span>
+                      <span className='shrink-0 text-muted'>.csv</span>
                     </div>
                   </div>
                 )
                 : (
-                  <div className='flex items-center justify-center space-x-2'>
+                  <div className='flex items-center justify-center space-x-3'>
                     <Csv className="shrink-0" />
-                    <div className='text-gray-500'>{t('app.generation.csvUploadTitle')}<span className='text-primary-400'>{t('app.generation.browse')}</span></div>
+                    <div className='text-gray-600'>{t('app.generation.csvUploadTitle')}<span className='font-semibold text-earth-amber-dark underline decoration-earth-amber/50 underline-offset-4'>{t('app.generation.browse')}</span></div>
                   </div>
                 )}
           </div>

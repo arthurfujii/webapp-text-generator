@@ -1,9 +1,14 @@
 .zone {
-    @apply flex items-center h-20 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer text-sm font-normal;
+    @apply flex h-24 cursor-pointer items-center rounded-md border border-dashed border-sand bg-cream-light text-sm font-normal text-gray-600 transition-all duration-200;
+    border-width: 1.5px;
+}
+
+.zone:hover {
+    @apply border-earth-amber bg-cream-base text-forest-dark;
 }
 
 .zoneHover {
-    @apply border-solid bg-gray-100;
+    @apply border-solid border-earth-amber bg-cream-base;
 }
 
 .info {

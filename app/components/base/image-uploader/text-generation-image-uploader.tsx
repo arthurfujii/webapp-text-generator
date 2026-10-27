@@ -50,15 +50,16 @@ const PasteImageLinkButton: FC<PasteImageLinkButtonProps> = ({
     >
       <PortalToFollowElemTrigger onClick={handleToggle}>
         <div className={`
-          relative flex items-center justify-center px-3 h-8 bg-gray-100 hover:bg-gray-200 text-xs text-gray-500 rounded-lg
-          ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
+          relative flex h-9 items-center justify-center rounded-sm border border-sand bg-cream-base px-3 text-xs font-semibold text-forest-dark
+          transition-colors duration-200 hover:border-forest-medium hover:bg-cream-light
+          ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
         `}>
           <Link03 className='mr-2 w-4 h-4' />
           {t('common.imageUploader.pasteImageLink')}
         </div>
       </PortalToFollowElemTrigger>
       <PortalToFollowElemContent className='z-10'>
-        <div className='p-2 w-[320px] bg-white border-[0.5px] border-gray-200 rounded-lg shadow-lg'>
+        <div className='w-[320px] rounded-md border border-sand bg-cream-light p-2 shadow-woodcut'>
           <ImageLinkInput onUpload={handleUpload} />
         </div>
       </PortalToFollowElemContent>
@@ -98,9 +99,10 @@ const TextGenerationImageUploader: FC<TextGenerationImageUploaderProps> = ({
       {
         hovering => (
           <div className={`
-            flex items-center justify-center px-3 h-8 bg-gray-100
-            text-xs text-gray-500 rounded-lg cursor-pointer
-            ${hovering && 'bg-gray-200'}
+            flex h-9 items-center justify-center rounded-sm border border-sand bg-cream-base px-3
+            text-xs font-semibold text-forest-dark transition-colors duration-200
+            ${hovering ? 'border-forest-medium bg-cream-light' : ''}
+            ${files.length >= settings.number_limits ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
           `}>
             <ImagePlus className='mr-2 w-4 h-4' />
             {t('common.imageUploader.uploadFromComputer')}
@@ -119,7 +121,7 @@ const TextGenerationImageUploader: FC<TextGenerationImageUploaderProps> = ({
 
   return (
     <div>
-      <div className='mb-1'>
+      <div className='mb-2'>
         <ImageList
           list={files}
           onRemove={onRemove}
@@ -128,7 +130,7 @@ const TextGenerationImageUploader: FC<TextGenerationImageUploaderProps> = ({
           onImageLinkLoadSuccess={onImageLinkLoadSuccess}
         />
       </div>
-      <div className={`grid gap-1 ${settings.transfer_methods.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      <div className={`grid gap-2 ${settings.transfer_methods.length === 2 ? 'grid-cols-1 pc:grid-cols-2' : 'grid-cols-1'}`}>
         {
           settings.transfer_methods.map((method) => {
             if (method === TransferMethod.local_file)

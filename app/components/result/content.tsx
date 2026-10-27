@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import React from 'react'
 import Header from './header'
-import type { Feedbacktype } from '@/app/components/app/chat/type'
-import { format } from '@/service/base'
+import { Markdown } from '@/app/components/base/markdown'
+import type { Feedbacktype } from '@/types/app'
 
 export type IResultProps = {
   content: string
@@ -20,14 +20,13 @@ const Result: FC<IResultProps> = ({
     <div className='basis-3/4 h-max'>
       <Header result={content} showFeedback={showFeedback} feedback={feedback} onFeedback={onFeedback} />
       <div
-        className='mt-4 w-full flex text-sm leading-5 overflow-scroll font-normal text-gray-900'
+        className='mt-4 w-full flex text-sm leading-6 overflow-scroll font-normal text-charcoal'
         style={{
           maxHeight: '70vh',
         }}
-        dangerouslySetInnerHTML={{
-          __html: format(content),
-        }}
-      ></div>
+      >
+        <Markdown content={content} />
+      </div>
     </div>
   )
 }

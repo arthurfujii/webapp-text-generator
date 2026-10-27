@@ -57,7 +57,7 @@ const CodeEditor: FC<Props> = ({
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#F2F4F7',
+        'editor.background': '#E8DFC8',
       },
     })
 
@@ -66,7 +66,7 @@ const CodeEditor: FC<Props> = ({
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#ffffff',
+        'editor.background': '#F4EFE2',
       },
     })
   }

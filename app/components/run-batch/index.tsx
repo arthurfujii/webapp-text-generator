@@ -27,7 +27,6 @@ const RunBatch: FC<IRunBatchProps> = ({
   const [isParsed, setIsParsed] = React.useState(false)
   const handleParsed = (data: string[][]) => {
     setCsvData(data)
-    // console.log(data)
     setIsParsed(true)
   }
 
@@ -36,19 +35,19 @@ const RunBatch: FC<IRunBatchProps> = ({
   }
   const Icon = isAllFinished ? PlayIcon : Loading02
   return (
-    <div className='pt-4'>
+    <div className='pt-5'>
       <CSVReader onParsed={handleParsed} />
       <CSVDownload vars={vars} />
-      <div className='mt-4 h-[1px] bg-gray-100'></div>
+      <div className='mt-5 divider'></div>
       <div className='flex justify-end'>
         <Button
           type="primary"
-          className='mt-4 !h-8 !pl-3 !pr-4'
+          className='mt-5 !h-9 !px-4'
           onClick={handleSend}
           disabled={!isParsed || !isAllFinished}
         >
-          <Icon className={cn(!isAllFinished && 'animate-spin', 'shrink-0 w-4 h-4 mr-1')} aria-hidden="true" />
-          <span className='uppercase text-[13px]'>{t('app.generation.run')}</span>
+          <Icon className={cn(!isAllFinished && 'animate-spin', 'shrink-0 w-4 h-4')} aria-hidden="true" />
+          <span className='uppercase tracking-brand text-[12px]'>{t('app.generation.run')}</span>
         </Button>
       </div>
     </div>

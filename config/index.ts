@@ -4,11 +4,11 @@ export const API_KEY = `${process.env.NEXT_PUBLIC_APP_KEY}`
 export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`
 export const IS_WORKFLOW = `${process.env.NEXT_PUBLIC_APP_TYPE_WORKFLOW}` === 'true'
 export const APP_INFO: AppInfo = {
-  title: 'Text Generator APP',
-  description: 'App description',
-  copyright: '',
+  title: 'Tapítise',
+  description: 'Artisanal texts, grown with care.',
+  copyright: 'Tapítise',
   privacy_policy: '',
-  default_language: 'en-US',
+  default_language: 'en',
 }
 
 export const API_PREFIX = `${process.env.NEXT_PUBLIC_API_PREFIX || '/api'}`

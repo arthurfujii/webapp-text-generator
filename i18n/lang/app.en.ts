@@ -49,6 +49,7 @@ const translation = {
     queryRequired: 'Request text is required.',
     waitForResponse: 'Please wait for the response to the previous message to complete.',
     waitForImgUpload: 'Please wait for the image to upload',
+    waitForBatchResponse: 'Please wait for the batch task to complete.',
   },
 }
 

@@ -268,7 +268,7 @@ const TextGeneration = () => {
     if (!checkBatchInputs(data))
       return
     if (!allTaskFinished) {
-      notify({ type: 'info', message: t('appDebug.errorMessage.waitForBatchResponse') })
+      notify({ type: 'info', message: t('app.errorMessage.waitForBatchResponse') })
       return
     }
 
@@ -372,7 +372,7 @@ const TextGeneration = () => {
 
   useEffect(() => {
     if (APP_INFO?.title)
-      document.title = `${APP_INFO.title} - Powered by Dify`
+      document.title = `${APP_INFO.title} — Text Generator`
   }, [APP_INFO?.title])
 
   const [isShowResSidebar, { setTrue: showResSidebar, setFalse: hideResSidebar }] = useBoolean(false)
@@ -410,28 +410,27 @@ const TextGeneration = () => {
       ref={resRef}
       className={
         cn(
-          'flex flex-col h-full shrink-0',
-          isPC ? 'px-10 py-8' : 'bg-gray-50',
+          'flex flex-col h-full shrink-0 bg-forest-dark forest-texture',
+          isPC ? 'px-10 py-8' : '',
           isTablet && 'p-6', isMobile && 'p-4')
       }
     >
       <>
-        <div className='shrink-0 flex items-center justify-between'>
+        <div className='shrink-0 flex items-center justify-between gap-4 border-b border-forest-medium/70 pb-4'>
           <div className='flex items-center space-x-3'>
             <div className={s.starIcon}></div>
-            <div className='text-lg text-gray-800 font-semibold'>{t('app.generation.title')}</div>
+            <div className='font-display text-2xl leading-none text-cream-base'>{t('app.generation.title')}</div>
           </div>
           <div className='flex items-center space-x-2'>
             {allFailedTaskList.length > 0 && (
               <div className='flex items-center'>
-                <AlertCircle className='w-4 h-4 text-[#D92D20]' />
-                <div className='ml-1 text-[#D92D20]'>{t('app.generation.batchFailed.info', { num: allFailedTaskList.length })}</div>
+                <AlertCircle className='w-4 h-4 text-error-soft' />
+                <div className='ml-1 text-sm text-error-soft'>{t('app.generation.batchFailed.info', { num: allFailedTaskList.length })}</div>
                 <Button
-                  type='primary'
-                  className='ml-2 !h-8 !px-3'
+                  className='ml-3 !h-8 !px-3'
                   onClick={handleRetryAllFailedTask}
                 >{t('app.generation.batchFailed.retry')}</Button>
-                <div className='mx-3 w-[1px] h-3.5 bg-gray-200'></div>
+                <div className='mx-3 w-[1px] h-3.5 bg-cream-base/25'></div>
               </div>
             )}
             {allSuccessTaskList.length > 0 && (
@@ -441,17 +440,19 @@ const TextGeneration = () => {
               />
             )}
             {!isPC && (
-              <div
-                className='flex items-center justify-center cursor-pointer'
+              <button
+                type='button'
+                aria-label={String(t('app.generation.title'))}
+                className='flex items-center justify-center rounded-sm p-1.5 text-cream-base transition-colors hover:bg-forest-medium hover:text-earth-amber'
                 onClick={hideResSidebar}
               >
-                <XMarkIcon className='w-4 h-4 text-gray-800' />
-              </div>
+                <XMarkIcon className='w-4 h-4' />
+              </button>
             )}
           </div>
         </div>
 
-        <div className='grow overflow-y-auto'>
+        <div className='grow overflow-y-auto pt-5'>
           {!isCallBatchAPI ? renderRes() : renderBatchRes()}
           {!noPendingTask && (
             <div className='mt-4'>
@@ -471,21 +472,24 @@ const TextGeneration = () => {
 
   return (
     <>
-      <div className={cn(isPC && 'flex', 'h-screen bg-gray-50')}>
+      <div className={cn(isPC && 'flex', 'h-screen bg-cream-light')}>
         {/* Left */}
-        <div className={cn(isPC ? 'w-[600px] max-w-[50%] p-8' : 'p-4', 'shrink-0 relative flex flex-col pb-10 h-full border-r border-gray-100 bg-white')}>
+        <div className={cn(isPC ? 'w-[600px] max-w-[50%] p-8' : 'p-4', 'shrink-0 relative flex flex-col pb-10 h-full border-r border-sand/70 bg-cream-light paper-texture')}>
           <div className='mb-6'>
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center gap-3'>
               <div className='flex items-center space-x-3'>
                 <div className={cn(s.appIcon, 'shrink-0')}></div>
-                <div className='text-lg text-gray-800 font-semibold'>{APP_INFO.title}</div>
+                <div>
+                  <div className='eyebrow mb-1 text-earth-amber-dark'>Text Studio</div>
+                  <div className='font-display text-2xl leading-tight text-forest-dark'>{APP_INFO.title}</div>
+                </div>
               </div>
               {!isPC && (
                 <Button
-                  className='shrink-0 !h-8 !px-3'
+                  className='shrink-0 !h-9 !px-3'
                   onClick={showResSidebar}
                 >
-                  <div className='flex items-center space-x-2 text-primary-600 text-[13px] font-medium'>
+                  <div className='flex items-center space-x-2 text-forest-dark text-[13px] font-semibold'>
                     <div className={s.starIcon}></div>
                     <span>{t('app.generation.title')}</span>
                   </div>
@@ -493,7 +497,7 @@ const TextGeneration = () => {
               )}
             </div>
             {APP_INFO.description && (
-              <div className='mt-2 text-xs text-gray-500'>{APP_INFO.description}</div>
+              <div className='mt-3 max-w-sm text-sm leading-relaxed text-gray-600'>{APP_INFO.description}</div>
             )}
           </div>
 
@@ -527,14 +531,14 @@ const TextGeneration = () => {
           </div>
 
           {/* copyright */}
-          <div className='fixed left-8 bottom-4  flex space-x-2 text-gray-400 font-normal text-xs'>
+          <div className='fixed left-4 bottom-4 flex max-w-[calc(100%-2rem)] space-x-2 text-gray-600 font-normal text-[11px] pc:left-8'>
             <div className="">© {APP_INFO.copyright || APP_INFO.title} {(new Date()).getFullYear()}</div>
             {APP_INFO.privacy_policy && (
               <>
                 <div>·</div>
                 <div>{t('app.generation.privacyPolicyLeft')}
                   <a
-                    className='text-gray-500'
+                    className='text-forest-medium underline decoration-earth-amber/50 underline-offset-2 transition-colors hover:text-earth-amber-dark'
                     href={APP_INFO.privacy_policy}
                     target='_blank'>{t('app.generation.privacyPolicyMiddle')}</a>
                   {t('app.generation.privacyPolicyRight')}
@@ -553,9 +557,9 @@ const TextGeneration = () => {
 
         {(!isPC && isShowResSidebar) && (
           <div
-            className={cn('fixed z-50 inset-0', isTablet ? 'pl-[128px]' : 'pl-6')}
+            className={cn('fixed z-50 inset-0 backdrop-blur-sm', isTablet ? 'pl-[128px]' : 'pl-6')}
             style={{
-              background: 'rgba(35, 56, 118, 0.2)',
+              background: 'rgba(18, 42, 30, 0.55)',
             }}
           >
             {renderResWrap}

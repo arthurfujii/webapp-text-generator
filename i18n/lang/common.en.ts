@@ -13,6 +13,7 @@ const translation = {
     refresh: 'Restart',
     search: 'Search',
     send: 'Send',
+    select: 'Select an option',
     copy: 'Copy',
     lineBreak: 'Line break',
     like: 'like',
