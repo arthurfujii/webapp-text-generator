@@ -25,8 +25,11 @@ ENV NEXT_PUBLIC_APP_ID=${NEXT_PUBLIC_APP_ID} \
     NEXT_PUBLIC_API_PREFIX=${NEXT_PUBLIC_API_PREFIX}
 
 # HUSKY=0: o prepare (`husky install`) nao tem .git no contexto de build
+# --legacy-peer-deps: @headlessui/react@1.7 declara peer react<=18 e o projeto
+# usa react 19 (mesma resolucao do dev local); o install e deterministico pelo
+# package-lock.json — o flag apenas pula a validacao de peers
 ENV HUSKY=0
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 RUN npm run build
 
 EXPOSE 3000
