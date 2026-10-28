@@ -30,7 +30,7 @@ const TabHeader: FC<ITabHeaderProps> = ({
       role="tab"
       aria-selected={id === value}
       className={cn(
-        id === value ? `${s.itemActive} text-forest-dark` : 'text-gray-600 hover:text-forest-medium',
+        id === value ? `${s.itemActive} text-forest-deep` : 'text-gray-700 hover:text-forest-medium',
         'relative flex cursor-pointer items-center pb-2.5 leading-6 transition-colors duration-200',
       )}
       onClick={() => onChange(id)}

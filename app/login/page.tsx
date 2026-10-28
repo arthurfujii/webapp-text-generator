@@ -29,6 +29,9 @@ const LoginPage = async ({ searchParams }: LoginPageProps) => {
       nextPath={sanitizeNextPath(searchParams?.next)}
       configured={isAuthConfigured()}
       currentYear={new Date().getFullYear()}
+      contactEmail={APP_INFO.contact_email}
+      contactPhone={APP_INFO.contact_phone}
+      contactWhatsapp={APP_INFO.contact_whatsapp}
     />
   )
 }

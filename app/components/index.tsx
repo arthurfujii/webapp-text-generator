@@ -21,6 +21,7 @@ import { changeLanguage } from '@/i18n/i18next-config'
 import Loading from '@/app/components/base/loading'
 import AppUnavailable from '@/app/components/app-unavailable'
 import UserMenu from '@/app/components/user-menu'
+import BrandMark from '@/app/components/brand-mark'
 import { API_KEY, APP_ID, APP_INFO, DEFAULT_VALUE_MAX_LEN, IS_WORKFLOW } from '@/config'
 import { userInputsFormToPromptVariables } from '@/utils/prompt'
 
@@ -415,16 +416,17 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
       ref={resRef}
       className={
         cn(
-          'flex flex-col h-full shrink-0 bg-forest-dark forest-texture',
+          'relative flex flex-col h-full shrink-0 overflow-hidden bg-forest-deep text-cream-paper',
           isPC ? 'px-10 py-8' : '',
           isTablet && 'p-6', isMobile && 'p-4')
       }
     >
+      <div className='topo-lines' aria-hidden='true' />
       <>
-        <div className='shrink-0 flex items-center justify-between gap-4 border-b border-forest-medium/70 pb-4'>
+        <div className='relative z-10 shrink-0 flex items-center justify-between gap-4 border-b border-cream-paper/20 pb-4'>
           <div className='flex items-center space-x-3'>
             <div className={s.starIcon}></div>
-            <div className='font-display text-2xl leading-none text-cream-base'>{t('app.generation.title')}</div>
+            <div className='font-display text-2xl font-semibold leading-none text-cream-paper'>{t('app.generation.title')}</div>
           </div>
           <div className='flex items-center space-x-2'>
             {allFailedTaskList.length > 0 && (
@@ -448,7 +450,7 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
               <button
                 type='button'
                 aria-label={String(t('app.generation.title'))}
-                className='flex items-center justify-center rounded-sm p-1.5 text-cream-base transition-colors hover:bg-forest-medium hover:text-earth-amber'
+                className='flex items-center justify-center rounded-sm p-1.5 text-cream-paper transition-colors hover:bg-forest-olive hover:text-cream-light'
                 onClick={hideResSidebar}
               >
                 <XMarkIcon className='w-4 h-4' />
@@ -457,7 +459,7 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
           </div>
         </div>
 
-        <div className='grow overflow-y-auto pt-5'>
+        <div className='relative z-10 grow overflow-y-auto pt-5'>
           {!isCallBatchAPI ? renderRes() : renderBatchRes()}
           {!noPendingTask && (
             <div className='mt-4'>
@@ -477,16 +479,17 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
 
   return (
     <>
-      <div className={cn(isPC && 'flex', 'h-screen bg-cream-light')}>
+      <div className={cn(isPC && 'flex', 'h-screen bg-cream-paper')}>
         {/* Left */}
-        <div className={cn(isPC ? 'w-[600px] max-w-[50%] p-8' : 'p-4', 'shrink-0 relative flex flex-col pb-10 h-full border-r border-sand/70 bg-cream-light paper-texture')}>
+        <div className={cn(isPC ? 'w-[600px] max-w-[50%] p-8' : 'p-4', 'surface-paper shrink-0 relative flex flex-col pb-10 h-full border-r border-sand/70')}>
           <div className='mb-6'>
             <div className='flex justify-between items-center gap-3'>
               <div className='flex items-center space-x-3'>
-                <div className={cn(s.appIcon, 'shrink-0')}></div>
+                <BrandMark className='h-10 w-10 shrink-0' />
                 <div>
                   <div className='eyebrow mb-1 text-earth-amber-dark'>Text Studio</div>
-                  <div className='font-display text-2xl leading-tight text-forest-dark'>{APP_INFO.title}</div>
+                  <div className='font-display text-display-md font-semibold lowercase leading-tight text-forest-deep'>{APP_INFO.title}</div>
+                  <div className='mt-1 text-lockup-sub font-semibold uppercase text-forest-medium'>Aceleradora</div>
                 </div>
               </div>
               {!isPC && (
@@ -502,7 +505,7 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
               )}
             </div>
             {APP_INFO.description && (
-              <div className='mt-3 max-w-sm text-sm leading-relaxed text-gray-600'>{APP_INFO.description}</div>
+              <div className='mt-4 max-w-sm text-sm leading-relaxed text-gray-700'>{APP_INFO.description}</div>
             )}
           </div>
 
@@ -536,7 +539,7 @@ const TextGeneration = ({ currentUser }: TextGenerationProps) => {
           </div>
 
           {/* copyright */}
-          <div className='absolute left-4 right-4 bottom-4 flex items-center justify-between gap-3 text-gray-600 font-normal text-[11px] pc:left-8 pc:right-8'>
+          <div className='absolute left-4 right-4 bottom-4 flex items-center justify-between gap-3 text-gray-700 font-normal text-[11px] pc:left-8 pc:right-8'>
             <div className='flex min-w-0 items-center gap-2'>
               <div className='whitespace-nowrap'>© {APP_INFO.copyright || APP_INFO.title} {(new Date()).getFullYear()}</div>
               {APP_INFO.privacy_policy && (

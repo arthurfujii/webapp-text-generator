@@ -9,6 +9,9 @@ export const APP_INFO: AppInfo = {
   copyright: 'Tapítise',
   privacy_policy: '',
   default_language: 'en',
+  contact_email: 'tapitise@gmail.com',
+  contact_phone: '+55 11 99620-1517',
+  contact_whatsapp: '5511996201517',
 }
 
 export const API_PREFIX = `${process.env.NEXT_PUBLIC_API_PREFIX || '/api'}`

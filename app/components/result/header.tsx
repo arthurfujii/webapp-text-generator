@@ -25,7 +25,7 @@ const Header: FC<IResultHeaderProps> = ({
   const { t } = useTranslation()
   return (
     <div className='flex w-full justify-between items-center '>
-      <div className='font-display text-2xl leading-none text-forest-dark'>{t('app.generation.resultTitle')}</div>
+      <div className='font-display text-2xl font-semibold leading-none text-forest-deep'>{t('app.generation.resultTitle')}</div>
       <div className='flex items-center space-x-2'>
         <Button
           className='flex items-center !h-7 !p-[2px] !pr-2'

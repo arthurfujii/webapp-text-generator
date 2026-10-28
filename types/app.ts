@@ -6,6 +6,9 @@ export type AppInfo = {
   default_language: Locale
   copyright?: string
   privacy_policy?: string
+  contact_email?: string
+  contact_phone?: string
+  contact_whatsapp?: string
 }
 
 export type PromptVariable = {

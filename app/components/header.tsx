@@ -18,7 +18,7 @@ const Header: FC<IHeaderProps> = ({
   onCreateNewChat,
 }) => {
   return (
-    <div className="shrink-0 flex items-center justify-between h-12 px-3 bg-cream-base border-b border-sand">
+    <div className="shrink-0 flex items-center justify-between h-12 px-3 bg-cream-paper border-b border-sand">
       {isMobile
         ? (
           <div
@@ -31,7 +31,7 @@ const Header: FC<IHeaderProps> = ({
         : <div></div>}
       <div className='flex items-center space-x-2'>
         <AppIcon size="small" />
-        <div className="font-display text-base text-forest-dark">{title}</div>
+        <div className="font-display text-base font-semibold text-forest-deep">{title}</div>
       </div>
       {isMobile
         ? (

@@ -4,12 +4,20 @@
 
 :root {
   /* Tapítise — color tokens */
+  --color-forest-deep: #122A1E;
   --color-forest-dark: #1A3B2B;
   --color-forest-medium: #2D5540;
-  --color-forest-deep: #122A1E;
+  --color-forest-light: #4C7059;
+  --color-forest-olive: #55663A;
+  --color-forest-olive-deep: #46552F;
+  --color-forest-olive-light: #6B7C4E;
+  --color-cream-paper: #EFE4C7;
   --color-cream-base: #E8DFC8;
   --color-cream-light: #F4EFE2;
+  --color-cream-dark: #D9CEB4;
   --color-earth-amber: #C88238;
+  --color-earth-amber-dark: #8A531F;
+  --color-earth-amber-light: #E3A45E;
   --color-charcoal: #181C19;
   --color-sand: #D2C5A7;
   --color-muted: #8C826B;
@@ -23,6 +31,8 @@
   /* Typography */
   --font-family-display: 'Fraunces', Georgia, Cambria, 'Times New Roman', serif;
   --font-family-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --tracking-brand: 0.15em;
+  --tracking-lockup: 0.28em;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -39,6 +49,7 @@
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-12: 3rem;
@@ -79,6 +90,7 @@
     @apply bg-cream-light font-body text-charcoal antialiased;
     min-height: 100%;
     font-size: var(--text-base);
+    font-optical-sizing: auto;
     line-height: 1.6;
     background-image:
       radial-gradient(circle at 8% 4%, rgba(200, 130, 56, 0.05), transparent 32%),
@@ -205,6 +217,10 @@
     @apply border-transparent bg-transparent text-forest-medium hover:border-sand hover:bg-cream-base hover:text-forest-dark;
   }
 
+  .btn-on-olive {
+    @apply border-cream-paper bg-cream-paper text-forest-deep shadow-[3px_3px_0px_#122A1E] hover:-translate-y-px hover:bg-cream-light active:translate-y-0 active:shadow-[2px_2px_0px_#122A1E];
+  }
+
   /* ------------------------------------------------------------------ */
   /* Forms                                                               */
   /* ------------------------------------------------------------------ */
@@ -251,6 +267,218 @@
     background-size: 10px 1px;
     background-repeat: repeat-x;
   }
+
+  /* ------------------------------------------------------------------ */
+  /* Editorial                                                           */
+  /* ------------------------------------------------------------------ */
+  .surface-paper {
+    background-color: var(--color-cream-paper);
+    color: var(--color-forest-deep);
+  }
+
+  .surface-olive {
+    background-color: var(--color-forest-olive);
+    color: var(--color-cream-paper);
+  }
+
+  .surface-olive :focus-visible,
+  .brand-footer :focus-visible {
+    outline-color: var(--color-cream-paper);
+  }
+
+  .split-editorial {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .split-panel {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-6);
+  }
+
+  .split-panel > :not(.topo-lines) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .editorial-title {
+    @apply font-display font-semibold;
+    font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .editorial-list {
+    counter-reset: editorial;
+    max-width: 34ch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-family-display);
+    font-size: var(--text-lg);
+    line-height: 1.45;
+  }
+
+  .editorial-list > li {
+    counter-increment: editorial;
+    position: relative;
+    padding-left: 2.25rem;
+  }
+
+  .editorial-list > li + li {
+    margin-top: var(--space-5);
+  }
+
+  .editorial-list > li::before {
+    content: counter(editorial) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.75rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .contact-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    color: var(--color-cream-paper);
+    font-family: var(--font-family-body);
+    font-size: var(--text-sm);
+    transition: color 200ms ease-out;
+  }
+
+  .contact-chip:hover {
+    color: var(--color-cream-light);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .contact-chip:hover .contact-chip-icon {
+    background-color: var(--color-earth-amber-light);
+  }
+
+  .contact-chip-light {
+    color: var(--color-forest-deep);
+  }
+
+  .contact-chip-light:hover {
+    color: var(--color-forest-medium);
+  }
+
+  .contact-chip-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-earth-amber);
+    color: var(--color-forest-deep);
+  }
+
+  .brand-footer {
+    position: relative;
+    overflow: visible;
+    background-color: var(--color-forest-deep);
+    color: var(--color-cream-paper);
+  }
+
+  .brand-footer-inner {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto auto;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8) 2.5rem;
+  }
+
+  .brand-footer-mascot {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-top: -3rem;
+  }
+
+  .brand-footer-name {
+    @apply font-body text-lg font-semibold;
+  }
+
+  .brand-footer-species {
+    @apply font-display text-sm italic;
+  }
+
+  .brand-footer-description {
+    @apply font-body text-sm;
+  }
+
+  .brand-footer-divider {
+    width: 1px;
+    align-self: stretch;
+    background-color: rgba(239, 228, 199, 0.25);
+  }
+
+  .brand-footer-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  @media (max-width: 1023px) {
+    .brand-footer-inner {
+      grid-template-columns: auto 1fr;
+    }
+
+    .brand-footer-divider {
+      display: none;
+    }
+
+    .brand-footer-contacts {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .brand-footer-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+
+    .brand-footer-mascot {
+      margin-top: 0;
+      max-width: 120px;
+    }
+
+    .brand-footer-divider {
+      display: block;
+      width: 100%;
+      height: 1px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .split-editorial {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .split-panel {
+      padding: var(--space-8);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .split-panel {
+      padding: var(--space-16);
+    }
+  }
 }
 
 @layer utilities {
@@ -266,6 +494,34 @@
     background-image:
       radial-gradient(circle at 14% 8%, rgba(200, 130, 56, 0.14), transparent 34%),
       radial-gradient(circle at 90% 92%, rgba(232, 223, 200, 0.055), transparent 42%);
+  }
+
+  .topo-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-color: currentColor;
+    opacity: 0.12;
+    --topo-mask: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%27480%27 height%3D%27480%27 viewBox%3D%270 0 480 480%27%3E%3Cg fill%3D%27none%27 stroke%3D%27%23000%27 stroke-width%3D%271%27 stroke-linecap%3D%27round%27%3E%3Cpath d%3D%27M460 16C460 17 459 19 459 20C458 21 457 23 456 24C455 25 454 25 452 26C451 27 450 28 449 28C447 29 446 30 444 30C443 30 441 30 440 29C439 29 437 29 436 29C434 29 432 30 430 30C428 30 426 29 425 28C424 27 424 25 423 24C423 22 424 21 424 20C424 18 424 17 424 16C424 15 424 14 424 12C424 11 424 10 425 9C425 8 426 6 427 5C428 4 429 3 431 3C432 2 434 2 435 1C437 1 438 0 440 -0C442 -0 444 -0 445 1C446 1 447 3 448 4C449 6 449 7 450 7C451 8 453 8 455 9C456 10 458 11 459 12C460 13 460 15 460 16Z%27%2F%3E%3Cpath d%3D%27M504 16C504 20 502 25 500 29C498 33 495 37 492 41C488 44 484 46 480 48C476 51 472 53 468 55C463 57 459 60 454 60C450 61 445 60 440 59C435 59 431 58 426 59C421 59 414 61 408 61C403 60 395 59 391 56C388 53 387 46 386 41C386 37 388 32 388 27C388 23 388 20 388 16C388 12 388 8 388 5C389 1 390 -3 391 -7C393 -11 395 -15 398 -19C401 -22 405 -25 410 -27C414 -29 419 -30 424 -32C429 -33 435 -35 440 -36C445 -36 452 -36 456 -33C461 -31 463 -25 466 -21C469 -18 470 -14 473 -11C477 -9 482 -9 487 -6C491 -4 497 -1 500 3C503 6 504 12 504 16Z%27%2F%3E%3Cpath d%3D%27M548 16C548 23 545 31 542 38C539 45 533 52 528 57C522 63 514 67 507 71C500 75 494 79 487 82C480 86 472 90 464 91C457 92 448 90 440 89C432 89 425 87 417 88C408 88 396 93 387 92C377 91 364 89 358 83C352 78 350 67 349 59C349 51 352 42 352 35C353 28 352 22 352 16C352 10 352 3 353 -3C354 -10 355 -16 358 -23C360 -29 363 -37 368 -43C373 -48 381 -53 389 -57C396 -60 405 -62 414 -64C422 -67 431 -71 440 -71C449 -72 460 -71 467 -67C475 -63 480 -53 485 -47C489 -41 491 -35 496 -30C502 -26 512 -26 519 -22C527 -18 537 -13 542 -6C546 -0 548 9 548 16Z%27%2F%3E%3Cpath d%3D%27M592 16C592 26 588 38 583 48C579 57 572 67 563 74C555 82 544 87 534 93C525 99 516 105 506 110C496 114 485 120 474 121C463 123 451 120 440 119C429 118 419 117 407 117C394 118 378 124 365 123C351 122 333 119 324 111C316 103 314 88 313 76C311 65 316 53 317 43C317 33 316 25 316 16C316 7 315 -2 317 -11C318 -20 321 -29 324 -39C328 -48 332 -59 339 -67C346 -75 357 -81 368 -86C378 -92 391 -94 403 -97C415 -101 427 -106 440 -107C453 -108 468 -107 478 -101C489 -96 496 -82 503 -73C510 -64 511 -55 519 -49C528 -43 541 -42 552 -37C562 -31 577 -24 583 -15C590 -7 592 6 592 16Z%27%2F%3E%3Cpath d%3D%27M635 16C636 30 631 44 625 57C619 69 610 81 599 91C588 101 574 108 562 116C549 123 538 131 525 137C512 143 499 150 484 152C470 154 455 150 440 149C425 148 414 146 397 146C381 147 361 155 343 154C325 153 302 148 291 138C280 128 277 108 276 94C274 79 280 64 281 51C282 38 279 28 279 16C280 4 279 -7 281 -19C283 -31 286 -43 291 -55C296 -67 300 -81 310 -91C319 -101 333 -110 347 -116C361 -123 377 -126 392 -130C408 -135 424 -142 440 -143C456 -144 476 -143 490 -135C503 -128 512 -110 521 -99C530 -88 532 -76 543 -68C553 -60 570 -59 584 -52C598 -45 616 -36 625 -25C633 -13 635 2 635 16Z%27%2F%3E%3Cpath d%3D%27M679 16C679 33 674 50 667 66C659 81 648 96 635 108C622 120 604 129 589 138C574 147 560 156 544 164C528 171 512 180 494 182C477 185 458 180 440 179C422 178 408 175 388 176C368 177 343 187 321 185C299 183 271 178 257 166C244 154 241 129 239 111C237 93 244 75 245 59C246 43 243 30 243 16C243 2 243 -12 245 -27C248 -41 251 -56 257 -71C263 -85 269 -102 281 -115C292 -127 309 -138 326 -146C343 -154 363 -158 382 -163C401 -168 420 -177 440 -179C460 -180 484 -179 501 -170C517 -161 528 -138 539 -125C550 -111 553 -97 566 -87C578 -77 599 -76 616 -67C633 -59 656 -48 666 -34C677 -20 679 -1 679 16Z%27%2F%3E%3Cpath d%3D%27M723 16C723 36 717 57 708 75C699 93 686 111 671 125C655 139 634 149 616 160C598 171 582 182 563 191C544 200 525 210 504 213C484 216 461 210 440 209C419 208 402 204 378 205C355 206 325 218 299 216C274 214 240 208 224 193C208 179 204 150 202 129C199 108 208 85 209 67C210 48 207 33 207 16C207 -1 207 -18 210 -35C213 -52 217 -69 224 -86C231 -104 238 -124 251 -139C265 -154 285 -166 305 -176C325 -185 348 -189 371 -196C393 -202 417 -213 440 -214C463 -216 492 -214 512 -204C531 -193 544 -167 557 -151C570 -134 573 -117 589 -106C604 -95 629 -93 649 -83C668 -72 695 -59 708 -43C720 -26 723 -4 723 16Z%27%2F%3E%3Cpath d%3D%27M767 16C767 39 760 63 750 84C740 105 724 126 706 142C689 159 664 170 643 183C623 195 604 208 582 218C561 228 538 240 514 243C491 247 464 240 440 239C416 237 396 233 369 234C342 236 307 249 277 247C248 245 209 238 190 221C171 204 168 171 165 146C162 122 172 96 174 75C175 53 171 35 171 16C171 -3 171 -23 174 -42C177 -62 182 -82 190 -102C198 -122 206 -146 222 -163C238 -180 261 -194 284 -205C307 -216 334 -221 360 -229C386 -236 413 -248 440 -250C467 -251 500 -250 523 -238C545 -225 561 -195 575 -176C590 -158 594 -138 612 -125C629 -112 658 -110 681 -98C704 -86 735 -71 749 -52C764 -33 767 -7 767 16Z%27%2F%3E%3Cpath d%3D%27M811 16C811 42 803 69 791 93C780 117 762 140 742 159C722 178 694 191 671 205C647 220 626 234 601 245C577 256 551 270 524 274C497 278 468 270 440 269C412 267 390 262 359 264C328 265 289 280 256 278C222 275 178 267 157 248C135 229 131 191 128 164C125 136 137 107 138 82C139 58 135 38 135 16C135 -6 135 -28 138 -50C142 -73 148 -95 157 -118C166 -141 175 -167 193 -187C211 -206 237 -223 263 -235C289 -247 320 -253 349 -261C379 -270 409 -284 440 -286C471 -287 508 -286 534 -272C560 -258 577 -224 594 -202C610 -181 615 -158 635 -144C655 -129 687 -127 713 -113C739 -100 774 -83 791 -61C807 -40 811 -10 811 16Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    -webkit-mask-image: var(--topo-mask);
+    mask-image: var(--topo-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: top right;
+    mask-position: top right;
+    -webkit-mask-size: 420px;
+    mask-size: 420px;
+    -webkit-mask-size: min(80%, 420px);
+    mask-size: min(80%, 420px);
+  }
+
+  .topo-lines-flip {
+    transform: scale(-1);
+  }
+
+  .surface-paper .topo-lines {
+    opacity: 0.07;
   }
 
   .focus-ring-amber {

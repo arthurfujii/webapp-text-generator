@@ -38,10 +38,10 @@ const UserMenu = ({ username }: UserMenuProps) => {
 
   return (
     <Menu as="div" className="relative shrink-0">
-      <Menu.Button className="group flex max-w-[12rem] items-center gap-1.5 rounded-sm border border-transparent px-1.5 py-1 text-[11px] font-semibold text-forest-medium transition-colors hover:border-sand hover:bg-cream-base hover:text-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-amber focus-visible:ring-offset-2 focus-visible:ring-offset-cream-light">
+      <Menu.Button className="group flex max-w-[12rem] items-center gap-1.5 rounded-sm border border-transparent px-1.5 py-1 text-[11px] font-semibold text-forest-medium transition-colors hover:border-sand hover:bg-cream-base hover:text-forest-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-amber focus-visible:ring-offset-2 focus-visible:ring-offset-cream-paper">
         <span
           aria-hidden="true"
-          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest-dark text-[8px] font-bold uppercase leading-none text-cream-base"
+          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest-deep text-[8px] font-bold uppercase leading-none text-cream-paper"
         >
           {username.slice(0, 2)}
         </span>

@@ -14,8 +14,14 @@ module.exports = {
           dark: '#1A3B2B',
           medium: '#2D5540',
           light: '#4C7059',
+          olive: {
+            DEFAULT: '#55663A',
+            deep: '#46552F',
+            light: '#6B7C4E',
+          },
         },
         cream: {
+          paper: '#EFE4C7',
           base: '#E8DFC8',
           light: '#F4EFE2',
           dark: '#D9CEB4',
@@ -124,6 +130,15 @@ module.exports = {
         sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
         serif: ['Fraunces', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
+      fontSize: {
+        'display-xl': ['3.5rem', { lineHeight: '1.02' }],
+        'display-lg': ['2.75rem', { lineHeight: '1.05' }],
+        'display-md': ['2rem', { lineHeight: '1.1' }],
+        'editorial-lg': ['1.25rem', { lineHeight: '1.45' }],
+        'editorial': ['1.125rem', { lineHeight: '1.45' }],
+        'label': ['0.6875rem', { lineHeight: '1', letterSpacing: '0.18em' }],
+        'lockup-sub': ['0.625rem', { lineHeight: '1', letterSpacing: '0.28em' }],
+      },
       borderRadius: {
         none: '0px',
         sm: '3px',
@@ -145,6 +160,7 @@ module.exports = {
       },
       letterSpacing: {
         brand: '0.15em',
+        lockup: '0.28em',
       },
       screens: {
         mobile: '100px',
