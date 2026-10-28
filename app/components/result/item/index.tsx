@@ -10,17 +10,15 @@ import { HashtagIcon } from '@heroicons/react/24/solid'
 import { Markdown } from '@/app/components/base/markdown'
 import Loading from '@/app/components/base/loading'
 import Toast from '@/app/components/base/toast'
-import type { Feedbacktype, WorkflowProcess } from '@/types/app'
+import type { Feedbacktype } from '@/types/app'
 import { updateFeedback } from '@/service'
 import Clipboard from '@/app/components/base/icons/line/clipboard'
 import RefreshCcw01 from '@/app/components/base/icons/line/refresh-ccw-01'
 import CodeEditor from '@/app/components/result/workflow/code-editor'
-import WorkflowProcessItem from '@/app/components/result/workflow/workflow-process'
 import { CodeLanguage } from '@/types/app'
 
 export type IGenerationItemProps = {
   isWorkflow?: boolean
-  workflowProcessData?: WorkflowProcess
   className?: string
   isError: boolean
   onRetry: () => void
@@ -59,7 +57,6 @@ export const copyIcon = (
 
 const GenerationItem: FC<IGenerationItemProps> = ({
   isWorkflow,
-  workflowProcessData,
   className,
   isError,
   onRetry,
@@ -127,7 +124,16 @@ const GenerationItem: FC<IGenerationItemProps> = ({
     >
       {isLoading
         ? (
-          <div className='flex items-center h-10'><Loading type='area' /></div>
+          isWorkflow
+            ? (
+              <div className='flex items-center h-10 gap-2 px-4'>
+                <div className='w-5 shrink-0'>
+                  <Loading type='area' />
+                </div>
+                <span className='text-sm font-semibold text-forest-medium'>Trabalhando...</span>
+              </div>
+            )
+            : <div className='flex items-center h-10'><Loading type='area' /></div>
         )
         : (
           <div
@@ -142,9 +148,6 @@ const GenerationItem: FC<IGenerationItemProps> = ({
             }
             <div className='flex'>
               <div className='grow w-0'>
-                {workflowProcessData && (
-                  <WorkflowProcessItem grayBg hideInfo data={workflowProcessData} expand={workflowProcessData.expand} />
-                )}
                 {isError && (
                   <div className='text-sm text-error'>{t('app.generation.batchFailed.outputPlaceholder')}</div>
                 )}

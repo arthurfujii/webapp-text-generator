@@ -179,7 +179,6 @@ const Result: FC<IResultProps> = ({
               tracing: [],
               expand: false,
             })
-            setResponsingFalse()
           },
           onNodeStarted: ({ data }) => {
             setWorkflowProccessData(produce(getWorkflowProccessData()!, (draft) => {
@@ -273,7 +272,6 @@ const Result: FC<IResultProps> = ({
   const renderTextGenerationRes = () => (
     <TextGenerationRes
       isWorkflow={isWorkflow}
-      workflowProcessData={workflowProcessData}
       className='mt-3'
       isError={isError}
       onRetry={handleSend}
@@ -293,8 +291,11 @@ const Result: FC<IResultProps> = ({
       {!isCallBatchAPI && (
         (isResponsing && !completionRes)
           ? (
-            <div className='flex h-full w-full justify-center items-center'>
+            <div className='flex h-full w-full flex-col justify-center items-center gap-3'>
               <Loading type='area' />
+              {isWorkflow && (
+                <p className='text-sm font-semibold text-cream-paper/80'>Trabalhando...</p>
+              )}
             </div>)
           : (
             <>
